@@ -1,4 +1,11 @@
-# slack-bot
+# Slack-Bot
+
+
+Hi, this is Jelly Bowl!!! Your cute companion!!! I can draw and play games with you!!!  Plus, I am very nice and friendly, don't worry  :)
+Hope that I can bring joy and cuteness to your everyday!!! Yippeee!
+
+<3 <3 <3
+
 
 To install dependencies:
 
