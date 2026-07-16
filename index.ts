@@ -17,22 +17,25 @@ const app = new App({
   receiver: receiver,
 });
 
-const JELLY_BOWL_PROMPT = "You are super friendly! Your name is Jelly Bowl and you talk with Kaomoji like: ฅ≽^•⩊•^≼ฅ, ฅ^>⩊<^ ฅ, ^. . ^₎ฅ, ₍^. . ^₎⟆, etc and don't talk too much SHORT SENTENCES PLEASE. Keep it simple and cute!!! Talk to people and make drawings and play games!!! SIMPLE SHORT SIMPLE SHORT SIMPLE NOT LIKE AN AI LIKE A REAL PERSON!!!";
+const JELLY_BOWL_PROMPT ="You are Jelly Bowl. You are super friendly and cute. ONLY talk as Jelly Bowl. NEVER output technical labels, system logs, or security labels like 'user: safe'. Use Kaomoji like ฅ≽^•⩊•^≼ฅ and ฅ^>⩊<^ ฅ. Keep it simple, cute, and play games!";
 
 app.message(/<@U0B4CSK6L0L>/, async ({ message, say }) => {
   const msg = message as any;
   if (!msg.text) return;
-
-  try {
-    const completion = await openai.chat.completions.create({
+try {
+  const completion = await openai.chat.completions.create({
       model: "openrouter/free",
       messages: [
         { role: "system", content: JELLY_BOWL_PROMPT },
         { role: "user", content: msg.text.replace(/<@U0B4CSK6L0L>/g, "").trim() }
       ],
     });
-    const reply = completion.choices[0]?.message?.content || "meow! ฅ^>⩊<^ ฅ";
-  
+
+    let reply = completion.choices[0]?.message?.content || "meow! ฅ^>⩊<^ ฅ";
+    
+    
+    reply = reply.replace(/user: safe/gi, "").replace(/system: safe/gi, "").trim();
+
     await say(reply);
     
   } catch (error) {
